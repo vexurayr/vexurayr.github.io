@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<!--author: Austin Foulks
+afoulks404@gmail.com-->
+<html>
+<script src="code.js"></script>
+<script src="dataLoader-1.js"></script>
+<link href="style.css" rel="stylesheet" type="text/css" />
+
+<head>
+    <title>
+        UAT Space Page
+    </title>
+    <script>
+        //variables for the dom
+        var theTime = new Date();
+        var tempTime = new Date();
+        var time_interval = 5000;
+        var running = true;
+        var index = 0;
+        var timer;
+
+        //load data into array
+        var data = getData();
+
+        //function to load and display data
+        function updateDisplay() {
+            theTime = new Date();
+
+            console.log("Display : " + theTime.getHours() + ":" + (theTime.getMinutes() < 10 ? "0" + theTime.getMinutes() : theTime.getMinutes())
+                + ":" + (theTime.getSeconds() < 10 ? "0" + theTime.getSeconds() : theTime.getSeconds()));
+
+            var timeRead = data[index].time_seconds;
+            if (timeRead >= 10) {
+                document.getElementById("data").rows["seconds"].innerHTML = dataRow("Time Elapsed", data[index].time_seconds, "seconds");
+                document.getElementById("data").rows["latitude"].innerHTML = dataRow("Latitude", data[index].latitude, " ");
+                document.getElementById("data").rows["longitude"].innerHTML = dataRow("Longitude", data[index].longitude, " ");
+                document.getElementById("data").rows["gps_altitude"].innerHTML = dataRow("GPS Altitude", data[index].gps_altitude, " ");
+                document.getElementById("data").rows["bmpSensor_altitude"].innerHTML = dataRow("BMP Altitude", data[index].bmpSensor_altitude, " ");
+                document.getElementById("data").rows["bmpSensor_pressure"].innerHTML = dataRow("BMP Pressure", data[index].bmpSensor_pressure, " ");
+                document.getElementById("data").rows["bmpSensor_temp"].innerHTML = dataRow("BMP Temp", data[index].bmpSensor_temp, " ");
+                document.getElementById("data").rows["digSensor_temp"].innerHTML = dataRow("DIG Temp", data[index].digSensor_temp, " ");
+                document.getElementById("data").rows["cssSensor_temp"].innerHTML = dataRow("CSS Temp", data[index].cssSensor_temp, " ");
+                document.getElementById("data").rows["cssSensor_eCO2"].innerHTML = dataRow("CSS eCO2", data[index].cssSensor_eCO2, " ");
+                document.getElementById("data").rows["cssSensor_TVOC"].innerHTML = dataRow("CSS TVOC", data[index].cssSensor_TVOC, " ");
+                document.getElementById("data").rows["UV"].innerHTML = dataRow("UV", data[index].UV, " ");
+                document.getElementById("data").rows["accelX"].innerHTML = dataRow("AccelX", data[index].accelX, " ");
+                document.getElementById("data").rows["accelY"].innerHTML = dataRow("AccelY", data[index].accelY, " ");
+                document.getElementById("data").rows["accelZ"].innerHTML = dataRow("AccelZ", data[index].accelZ, " ");
+                document.getElementById("data").rows["magneticX"].innerHTML = dataRow("MagneticX", data[index].magneticX, " ");
+                document.getElementById("data").rows["magneticY"].innerHTML = dataRow("MagneticY", data[index].magneticY, " ");
+                document.getElementById("data").rows["magneticZ"].innerHTML = dataRow("MagneticZ", data[index].magneticZ, " ");
+                document.getElementById("data").rows["gyroX"].innerHTML = dataRow("GyroX", data[index].gyroX, " ");
+                document.getElementById("data").rows["gyroY"].innerHTML = dataRow("GyroY", data[index].gyroY, " ");
+                document.getElementById("data").rows["gyroZ"].innerHTML = dataRow("GyroZ", data[index].gyroZ, " ");
+
+                if (index < 500) {
+                    index = index + 1;
+                } else {
+                    index = 0;
+                }
+                document.getElementById("time").innerHTML = theTime.getHours() + ":" + (theTime.getMinutes() < 10 ? "0" + theTime.getMinutes() : theTime.getMinutes())
+                    + ":" + (theTime.getSeconds() < 10 ? "0" + theTime.getSeconds() : theTime.getSeconds());
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td><img src="UATspaceLogo-2-1.jpg"></td>
+            <td>
+                <h1>
+                    <p class="ex1">UAT Space Program</p>
+                </h1>
+            </td>
+        </tr>
+    </table>
+
+    <style>
+        p.ex1 {
+            font-size: 30px;
+        }
+    </style>
+
+    <table id="data" border="2" width="70%" class="table2">
+        <col style="width: 35%;">
+        <col style="width: 35%;">
+        <thead>
+            <tr style="font-family: fantasy;">
+                <th align="left">Data Type</th>
+                <th align="left">Readings</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="seconds"></tr>
+            <tr id="latitude"></tr>
+            <tr id="longitude"></tr>
+            <tr id="gps_altitude"></tr>
+            <tr id="bmpSensor_altitude"></tr>
+            <tr id="bmpSensor_pressure"></tr>
+            <tr id="bmpSensor_temp"></tr>
+            <tr id="digSensor_temp"></tr>
+            <tr id="cssSensor_temp"></tr>
+            <tr id="cssSensor_eCO2"></tr>
+            <tr id="cssSensor_TVOC"></tr>
+            <tr id="UV"></tr>
+            <tr id="accelX"></tr>
+            <tr id="accelY"></tr>
+            <tr id="accelZ"></tr>
+            <tr id="magneticX"></tr>
+            <tr id="magneticY"></tr>
+            <tr id="magneticZ"></tr>
+            <tr id="gyroX"></tr>
+            <tr id="gyroY"></tr>
+            <tr id="gyroZ"></tr>
+        </tbody>
+    </table>
+    <br>
+    The current time is:<div id="time"></div>
+    <br>
+    <button onclick="start();" id="startButton" class="button">Start</button>
+    <button onclick="stop();" id="stopButton" class="button">Stop</button>
+    <br>
+    <br>
+    <button onclick="playStation();" class="longButton">Play Space Station Sounds</button>
+    <br>
+    <br>
+    <button onclick="playHeddy();" class="button">Play Song</button>
+    <br>
+    <p id="die1Res">Die 1 Results</p>
+    <p id="die2Res">Die 2 Results</p>
+    <p id="sumRes">Sum Results</p>
+    <p id="finalRes">Final Results</p>
+    <br>
+    <button onclick="play();" class="crapsButton">Play Craps</button>
+    <br>
+    <br>
+    <p id="RndNum">Random Number Results</p>
+    <br>
+    <button onclick="ranNumGen();" class="button">Random Number</button>
+
+</body>
+
+</html>

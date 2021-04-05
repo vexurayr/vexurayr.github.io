@@ -1,0 +1,32 @@
+.elem {
+    background: blueviolet;
+    width: 300px;
+    height: 150px;
+    color: white;
+}
+.elem:hover{
+    opacity: 0.5;
+    transform: scale(1.5);
+}
+
+.elem2 {
+    background: red;
+    width: 300px;
+    height: 150px;
+    margin: 20px;
+    animation: moveToRight 2s ease-in-out;
+    animation-delay: 1000ms;
+    transition: 500ms linear;
+}
+
+@keyframes moveToRight {
+    0% {transform: translateX(0px);
+    }
+    100% {transform: translateX(300px);
+    }
+}
+
+.elem2:hover{
+    opacity: 0.5;
+    transform: scale(1.5);
+}
